@@ -12,10 +12,11 @@
 
 
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
 
 class Solution:
     def addTwoNumbers(self, l1, l2):
@@ -24,19 +25,28 @@ class Solution:
         :type l2: ListNode
         :rtype: ListNode
         """
-        if len(l1) == 0 or len(l2) == 0:
-            return False
-        l1 = int(''.join([str(i) for i in list(reversed(l1))]))
-        l2 = int(''.join([str(i) for i in list(reversed(l2))]))
-
-        l3 = l1 + l2
-        l3 = [int(i) for i in list(reversed(str(l3)))]
-        return l3
+        ans = ListNode(0)
+        tmp = ans
+        tmpsum = 0
+        while True:
+            if l1 != None:
+                tmpsum += l1.val
+                l1 = l1.next
+            if l2 != None:
+                tmpsum += l2.val
+                l2 = l2.next
+            tmp.val = tmpsum % 10
+            tmpsum = tmpsum // 10
+            if l1 == None and l2 == None and tmpsum == 0:
+                break
+            tmp.next = ListNode(0)
+            tmp = tmp.next
+        return ans
 
 
 if __name__ == '__main__':
-    l1 = [2, 4, 3]
-    l2 = [5, 6, 4]
+    l1 = ListNode(5)
+    l2 = ListNode(5)
     ss = Solution()
     l3 = ss.addTwoNumbers(l1, l2)
-    print(l3)
+    print(l3.val)
